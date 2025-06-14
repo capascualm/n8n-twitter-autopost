@@ -1,0 +1,52 @@
+{
+  "name": "Post to Twitter",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "everyX",
+        "value": 1,
+        "unit": "hours"
+      },
+      "name": "Cron",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "https://api.twitter.com/1.1/statuses/update.json",
+        "jsonParameters": true,
+        "options": {},
+        "bodyParametersJson": "{\"status\":\"Automated tweet from n8n \ud83e\udd16\"}",
+        "authentication": "oAuth1Api",
+        "oAuth1Api": {
+          "credentials": "Twitter OAuth1 API"
+        }
+      },
+      "name": "Post Tweet",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Cron": {
+      "main": [
+        [
+          {
+            "node": "Post Tweet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
